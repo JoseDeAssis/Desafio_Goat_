@@ -19,8 +19,8 @@ public class ServidorService {
         return servidorRepository.findAll();
     }
 
-    public ServidorModel findById(UUID id) {
-        return servidorRepository.findById(id).orElseThrow(() -> new NotFoundServidorException("Nenhum servidor encontrado com o UUID: " + id));
+    public ServidorModel findById(Long id) {
+        return servidorRepository.findById(id).orElseThrow(() -> new NotFoundServidorException("Nenhum servidor encontrado com o ID: " + id));
     }
 
     public ServidorModel findByCpf(String cpf) {
@@ -31,7 +31,7 @@ public class ServidorService {
         return servidorRepository.save(servidor);
     }
 
-    public void deleteById(UUID id) {
+    public void deleteById(Long id) {
         servidorRepository.deleteById(id);
     }
 }

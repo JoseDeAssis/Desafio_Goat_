@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -45,7 +44,7 @@ public class EspecializacaoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable UUID id) {
+    public ResponseEntity<?> findById(@PathVariable Long id) {
         try {
             EspecializacaoModel especializacaoModel = especializacaoService.findById(id);
             return new ResponseEntity<>(new EspecializacaoRecord(especializacaoModel), HttpStatus.OK);
@@ -56,8 +55,8 @@ public class EspecializacaoController {
         }
     }
 
-    @GetMapping("/{cpf}")
-    public ResponseEntity<?> findByServidorCpf(@PathVariable String cpf) {
+    @GetMapping("/")
+    public ResponseEntity<?> findByServidorCpf(@RequestParam(value = "cpf") String cpf) {
         try {
             List<EspecializacaoModel> listaEspecializacaoModel = especializacaoService.findByServidorCpf(cpf);
             List<EspecializacaoRecord> listaEspecializacaoRecord =
@@ -91,7 +90,7 @@ public class EspecializacaoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateById(@PathVariable UUID id, @RequestBody @Valid EspecializacaoRecord especializacao) {
+    public ResponseEntity<?> updateById(@PathVariable Long id, @RequestBody @Valid EspecializacaoRecord especializacao) {
         try {
             EspecializacaoModel especializacaoModel = especializacaoService.findById(id);
             especializacaoModel.setArea(especializacao.area());
@@ -114,7 +113,7 @@ public class EspecializacaoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable UUID id) {
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
         try {
             especializacaoService.deleteById(id);
             return new ResponseEntity<>("Especialização deletada com sucesso!", HttpStatus.OK);
@@ -124,7 +123,7 @@ public class EspecializacaoController {
     }
 
     @PutMapping("/{id}/deferir")
-    public ResponseEntity<?> deferirEspecializacao(@PathVariable UUID id) {
+    public ResponseEntity<?> deferirEspecializacao(@PathVariable Long id) {
         try {
             EspecializacaoModel especializacaoModel = especializacaoService.deferirEspecializacao(id);
             return new ResponseEntity<>(new EspecializacaoRecord(especializacaoModel), HttpStatus.OK);
@@ -136,9 +135,9 @@ public class EspecializacaoController {
     }
 
     @PutMapping("{id}/indeferir")
-    public ResponseEntity<?> indeferirEspecializacao(@PathVariable UUID id, @RequestBody String motivo) {
+    public ResponseEntity<?> indeferirEspecializacao(@PathVariable Long id, @RequestParam(value = "motivoIndeferimento") String motivoIndeferimento) {
         try {
-            EspecializacaoModel especializacaoModel = especializacaoService.indeferirEspecializacao(id, motivo);
+            EspecializacaoModel especializacaoModel = especializacaoService.indeferirEspecializacao(id, motivoIndeferimento);
             return new ResponseEntity<>(new EspecializacaoRecord(especializacaoModel), HttpStatus.OK);
         } catch (NotFoundEspecializacaoException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

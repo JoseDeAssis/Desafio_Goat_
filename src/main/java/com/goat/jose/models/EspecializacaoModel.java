@@ -4,18 +4,20 @@ import com.goat.jose.enums.StatusEspecializacao;
 import com.goat.jose.enums.TipoEspecializacao;
 import com.goat.jose.models.records.EspecializacaoRecord;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.UUID;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="TB_ESPECIALIZACAO")
 public class EspecializacaoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID especializacaoId;
+    private Long especializacaoId;
 
     private String area;
 

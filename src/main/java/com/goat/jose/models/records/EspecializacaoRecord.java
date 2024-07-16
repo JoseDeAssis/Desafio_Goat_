@@ -4,15 +4,14 @@ import com.goat.jose.enums.StatusEspecializacao;
 import com.goat.jose.enums.TipoEspecializacao;
 import com.goat.jose.models.EspecializacaoModel;
 import jakarta.validation.constraints.NotBlank;
-
-import java.util.UUID;
+import jakarta.validation.constraints.NotNull;
 
 public record EspecializacaoRecord(
         @NotBlank String area,
-        @NotBlank TipoEspecializacao tipoEspecializacao,
-        @NotBlank int cargaHoraria,
-        @NotBlank double valorTotalCusto,
-        @NotBlank UUID servidorId,
+        @NotNull TipoEspecializacao tipoEspecializacao,
+        @NotNull int cargaHoraria,
+        @NotNull double valorTotalCusto,
+        @NotNull Long servidorId,
         StatusEspecializacao status,
         String motivoIndeferimento
 ) {
@@ -22,7 +21,7 @@ public record EspecializacaoRecord(
             TipoEspecializacao tipoEspecializacao,
             int cargaHoraria,
             double valorTotalCusto,
-            UUID servidorId,
+            Long servidorId,
             StatusEspecializacao status,
             String motivoIndeferimento
     ) {

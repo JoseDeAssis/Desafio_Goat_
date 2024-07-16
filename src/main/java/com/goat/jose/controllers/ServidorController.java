@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -41,7 +40,7 @@ public class ServidorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable UUID id) {
+    public ResponseEntity<?> findById(@PathVariable Long id) {
         try {
             ServidorModel servidorModel = servidorService.findById(id);
             ServidorRecord servidorRecord = new ServidorRecord(servidorModel);
@@ -53,8 +52,8 @@ public class ServidorController {
         }
     }
 
-    @GetMapping("/{cpf}")
-    public ResponseEntity<?> findByCpf(@PathVariable String cpf) {
+    @GetMapping("/")
+    public ResponseEntity<?> findByCpf(@RequestParam(value = "cpf") String cpf) {
         try {
             ServidorModel servidorModel = servidorService.findByCpf(cpf);
             ServidorRecord servidorRecord = new ServidorRecord(servidorModel);
@@ -78,7 +77,7 @@ public class ServidorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateServidorById(@PathVariable UUID id, @RequestBody @Valid ServidorRecord servidor) {
+    public ResponseEntity<?> updateServidorById(@PathVariable Long id, @RequestBody @Valid ServidorRecord servidor) {
         try {
             ServidorModel servidorModel = servidorService.findById(id);
             servidorModel.setCpf(servidor.cpf());
@@ -99,7 +98,7 @@ public class ServidorController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable UUID id) {
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
         try {
             servidorService.deleteById(id);
             return new ResponseEntity<>("Servidor deletado com sucesso!", HttpStatus.OK);

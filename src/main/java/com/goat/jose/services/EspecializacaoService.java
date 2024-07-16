@@ -21,9 +21,9 @@ public class EspecializacaoService {
         return especializacaoRepository.findAll();
     }
 
-    public EspecializacaoModel findById(UUID id) {
+    public EspecializacaoModel findById(Long id) {
         return especializacaoRepository.findById(id).orElseThrow(() ->
-                new NotFoundEspecializacaoException("Nenhuma especialização com o UUID: " + id));
+                new NotFoundEspecializacaoException("Nenhuma especialização com o ID: " + id));
     }
 
     public List<EspecializacaoModel> findByServidorCpf(String cpf) {
@@ -35,13 +35,13 @@ public class EspecializacaoService {
         return especializacaoRepository.save(especializacao);
     }
 
-    public void deleteById(UUID id) {
+    public void deleteById(Long id) {
         especializacaoRepository.deleteById(id);
     }
 
-    public EspecializacaoModel deferirEspecializacao(UUID id) {
+    public EspecializacaoModel deferirEspecializacao(Long id) {
         EspecializacaoModel especializacao = especializacaoRepository.findById(id).orElseThrow(() ->
-                new NotFoundEspecializacaoException("Nenhuma especialização com o UUID: " + id));
+                new NotFoundEspecializacaoException("Nenhuma especialização com o ID: " + id));
 
         if(especializacao != null) {
             especializacao.setStatus(StatusEspecializacao.APROVADO);
@@ -52,9 +52,9 @@ public class EspecializacaoService {
         return especializacao;
     }
 
-    public EspecializacaoModel indeferirEspecializacao(UUID id, String motivo) {
+    public EspecializacaoModel indeferirEspecializacao(Long id, String motivo) {
         EspecializacaoModel especializacao = especializacaoRepository.findById(id).orElseThrow(() ->
-                new NotFoundEspecializacaoException("Nenhuma especialização com o UUID: " + id));
+                new NotFoundEspecializacaoException("Nenhuma especialização com o ID: " + id));
 
         if(especializacao != null) {
             especializacao.setStatus(StatusEspecializacao.REPROVADO);
